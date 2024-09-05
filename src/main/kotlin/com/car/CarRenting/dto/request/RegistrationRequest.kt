@@ -38,7 +38,7 @@ class RegistrationRequest {
     @NotBlank(message = "Passwordin se na cave kr")
     @Size(min = 4, message = "Passwordi t pakten 4 germa se i qr")
 //  @NotEmptyString(message = "Pa pasurod do regjistrohesh o kr")
-    var password: String? = null
+        var password: String? = null
 
     //    @NotEmpty(message = "Ca do me u bo o kr")
 //    @NotBlank(message = "Ca do me u bo o kr")
