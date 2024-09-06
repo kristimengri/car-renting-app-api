@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: CarRenting
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+      max-file-size: 50MB
+  datasource:
+    url: jdbc:postgresql://dpg-crcrlv2j1k6c73csad6g-a.oregon-postgres.render.com:5432/car_renting_garc
+    username: kent
+    password: wf3M3dWYtWgpGl16jjO633on8MfEKl5g
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+springdoc:
+  default-produces-media-type: application/json
+
+server:
+  servlet:
+    context-path: /api/v1/
+
