@@ -28,12 +28,8 @@ import io.swagger.v3.oas.annotations.servers.Server
     ),
     servers = [
         Server(
-            description = "Local ENV",
-            url = "https://car-renting-app-api.onrender.com/api/v1"
-        ),
-        Server(
             description = "PROD ENV",
-            url = "https://kent.com"
+            url = "https://car-renting-app-api.onrender.com/api/v1"
         )
     ],
     security = [
