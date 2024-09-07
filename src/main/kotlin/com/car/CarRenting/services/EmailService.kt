@@ -52,7 +52,7 @@ class EmailService(
             setVariables(properties)
         }
 
-        helper.setFrom("kent@gmail.com")
+        helper.setFrom("intelligencea61@gmail.com")
         helper.setTo(to)
         helper.setSubject(subject)
 
