@@ -577,7 +577,7 @@ id,name,country_id
 3116,Nahouri Province,35
 3113,Namentenga Province,35
 3142,Nayala Province,35
-3164,"Nord Region, Burkina Faso",35
+3164,Nord Region, Burkina Faso,35
 3156,Noumbiel Province,35
 3141,Oubritenga Province,35
 3144,Oudalan Province,35
@@ -780,7 +780,7 @@ id,name,country_id
 2895,Amazonas,48
 2890,Antioquia,48
 2881,Arauca,48
-2900,"Archipiélago de San Andrés, Providencia y Santa Catalina",48
+2900,Archipiélago de San Andrés, Providencia y Santa Catalina,48
 2880,Atlántico,48
 4921,Bogotá D.C.,48
 2893,Bolívar,48
@@ -968,7 +968,7 @@ id,name,country_id
 4578,Prachatice,58
 4606,Praha-východ,58
 4619,Praha-západ,58
-4598,"Praha, Hlavní město",58
+4598,Praha, Hlavní město,58
 4626,Přerov,58
 4546,Příbram,58
 4551,Prostějov,58
@@ -1182,7 +1182,7 @@ id,name,country_id
 7,Harari Region,70
 5,Oromia Region,70
 2,Somali Region,70
-1,"Southern Nations, Nationalities, and Peoples' Region",70
+1,Southern Nations, Nationalities, and Peoples' Region,70
 4,Tigray Region,70
 5229,Eysturoy,72
 5230,Northern Isles,72
@@ -4611,7 +4611,7 @@ id,name,country_id
 2523,Ards and North Down,232
 2392,Argyll and Bute,232
 2331,Armagh City and District Council,232
-2324,"Armagh, Banbridge and Craigavon",232
+2324,Armagh, Banbridge and Craigavon,232
 2378,Ascension Island,232
 2363,Ballymena Borough,232
 2361,Ballymoney,232
@@ -4766,7 +4766,7 @@ id,name,country_id
 2458,Newcastle upon Tyne,232
 2524,Newport,232
 2350,Newry and Mourne District Council,232
-2534,"Newry, Mourne and Down",232
+2534,Newry, Mourne and Down,232
 2317,Newtownabbey Borough Council,232
 2473,Norfolk,232
 2535,North Ayrshire,232
