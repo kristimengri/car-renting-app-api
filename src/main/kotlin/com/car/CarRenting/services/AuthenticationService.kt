@@ -147,7 +147,10 @@ class AuthenticationService(
             val user = auth.principal as User
             claims["fullName"] = user.fullname()
             val jwtToken = jwtService.generateToken(claims, user)
-            return AuthenticationResponse().apply { token = jwtToken }
+            return AuthenticationResponse().apply {
+                token = jwtToken
+                enabled = user.enabled
+            }
 
 
             // Return appropriate response
@@ -170,6 +173,8 @@ class AuthenticationService(
         val savedToken: Token = tokenRepository.findByToken(token).orElseThrow {
             RuntimeException("Invalid token")
         }
+
+
 
 
         if (savedToken.user?.enabled == true) {

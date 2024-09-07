@@ -38,7 +38,8 @@ class SecurityConfig (
                         "/swagger-ui/**",
                         "/webjars/**",
                         "/swagger-ui.html",
-                        "/testDeploy"
+                        "/testDeploy",
+                        "/locations/**"
                     )
                     .permitAll()
                     .anyRequest()
