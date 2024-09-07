@@ -21,3 +21,8 @@ server:
   servlet:
     context-path: /api/v1/
 
+logging:
+  level:
+    root: DEBUG
+    org.springframework: DEBUG
+    org.hibernate: DEBUG
