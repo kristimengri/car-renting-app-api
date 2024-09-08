@@ -3,6 +3,7 @@ package com.car.CarRenting.services
 import com.car.CarRenting.dto.request.AuthenticationRequest
 import com.car.CarRenting.dto.request.RegistrationRequest
 import com.car.CarRenting.dto.response.AuthenticationResponse
+import com.car.CarRenting.dto.response.RegisterResponse
 import com.car.CarRenting.entity.*
 import com.car.CarRenting.entity.access.Role
 import com.car.CarRenting.entity.access.Token
@@ -10,6 +11,7 @@ import com.car.CarRenting.entity.account.CarOwner
 import com.car.CarRenting.entity.account.Customer
 import com.car.CarRenting.entity.account.User
 import com.car.CarRenting.enums.EmailTemplateName
+import com.car.CarRenting.enums.RegisterStatusEnum
 import com.car.CarRenting.enums.RoleEnum
 import com.car.CarRenting.repository.*
 import com.car.CarRenting.security.JwtService
@@ -18,6 +20,7 @@ import lombok.RequiredArgsConstructor
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
 import org.springframework.mail.MailSendException
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -51,85 +54,99 @@ class AuthenticationService(
 
     @Throws(MessagingException::class)
     @Transactional
-    fun register(request: RegistrationRequest) {
+    fun register(request: RegistrationRequest): RegisterResponse {
 
-        logger.debug("Registering user with email: {}", request.email)
+       try {
+            logger.debug("Registering user with email: {}", request.email)
 
-        // Create or get role
-        val role = roleRepository.findByName(request.role!!).orElseGet {
-            val newRole = Role().apply {
-                name = request.role
-                createdAt = LocalDateTime.now()
-                modifiedAt = LocalDateTime.now()
+            // Create or get role
+            val role = roleRepository.findByName(request.role!!).orElseGet {
+                val newRole = Role().apply {
+                    name = request.role
+                    createdAt = LocalDateTime.now()
+                    modifiedAt = LocalDateTime.now()
+                }
+                roleRepository.save(newRole)
             }
-            roleRepository.save(newRole)
-        }
 
-        logger.debug("Role found or created: {}", role.name)
+            logger.debug("Role found or created: {}", role.name)
 
-        // Create user without setting createdBy
-        var user = User().apply {
-            userName = request.userName
-            gender = request.gender!!
-            address = request.address
-            city = request.city
-            country = request.country
-            phoneNumber = request.phoneNumber
-            firstname = request.firstname
-            lastname = request.lastname
-            email = request.email
-            password = passwordEncoder.encode(request.password)
-            accountLocked = false
-            enabled = false
-            isDeleted = false
-            roles.add(role)
+            // Create user without setting createdBy
+            var user = User().apply {
+                userName = request.userName
+                gender = request.gender!!
+                address = request.address
+                city = request.city
+                country = request.country
+                phoneNumber = request.phoneNumber
+                firstname = request.firstname
+                lastname = request.lastname
+                email = request.email
+                password = passwordEncoder.encode(request.password)
+                accountLocked = false
+                enabled = false
+                isDeleted = false
+                roles.add(role)
 
-        }
-        userRepository.save(user)
+            }
+            userRepository.save(user)
 
-        logger.debug("User created with ID: {}", user.id)
+            logger.debug("User created with ID: {}", user.id)
 
-        user.createdBy = user.id
-        userRepository.save(user) // Save the user again to update createdBy
+            user.createdBy = user.id
+            userRepository.save(user) // Save the user again to update createdBy
 
 //        if (role.createdBy == 0L) {
 //            role.createdBy = user.id
 //            roleRepository.save(role) // Update role with correct createdBy
 //        }
 
-        // Handle specific role-related entities
-        when (request.role) {
-            RoleEnum.CUSTOMER -> {
-                val customer = Customer().apply {
-                    this.user = user
-                }
-                customerRepository.save(customer)
-                user.customer = customer
-            }
-
-            RoleEnum.CAR_OWNER -> {
-                val carOwner = CarOwner().apply {
-                    this.user = user
+            // Handle specific role-related entities
+            when (request.role) {
+                RoleEnum.CUSTOMER -> {
+                    val customer = Customer().apply {
+                        this.user = user
+                    }
+                    customerRepository.save(customer)
+                    user.customer = customer
                 }
 
-                carOwner.copyFrom(user)
-                carOwnerRepository.save(carOwner)
-                user.carOwner = carOwner
-                carOwner.createdBy = carOwner.id
-                user.carOwner = carOwner
+                RoleEnum.CAR_OWNER -> {
+                    val carOwner = CarOwner().apply {
+                        this.user = user
+                    }
+
+                    carOwner.copyFrom(user)
+                    carOwnerRepository.save(carOwner)
+                    user.carOwner = carOwner
+                    carOwner.createdBy = carOwner.id
+                    user.carOwner = carOwner
+                }
+
+                else -> {
+                    // Handle other roles or throw an exception
+                }
             }
 
-            else -> {
-                // Handle other roles or throw an exception
+            // Save user again to ensure all relationships are updated
+            userRepository.save(user)
+
+            logger.debug("User registration completed for ID: {}", user.id)
+            sendValidationEmail(user)
+            return RegisterResponse().apply {
+                registerStatus = RegisterStatusEnum.SUCCESSFULLY_REGISTERED
             }
         }
 
-        // Save user again to ensure all relationships are updated
-        userRepository.save(user)
-        logger.debug("User registration completed for ID: {}", user.id)
+       catch (e: NotFoundException) {
 
+           val registerResponse: RegisterResponse ?= null
+           registerResponse?.registerStatus = RegisterStatusEnum.FAILED_REGISTERED
 
-        sendValidationEmail(user)
+           logger.error("Register failed for user: {}", request.email, e)
+           throw e
+
+       }
     }
 
     fun authenticate(request: AuthenticationRequest): AuthenticationResponse {

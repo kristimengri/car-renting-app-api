@@ -3,6 +3,7 @@ package com.car.CarRenting.controllers
 import com.car.CarRenting.dto.request.AuthenticationRequest
 import com.car.CarRenting.dto.request.RegistrationRequest
 import com.car.CarRenting.dto.response.AuthenticationResponse
+import com.car.CarRenting.dto.response.RegisterResponse
 import com.car.CarRenting.services.AuthenticationService
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.mail.MessagingException
@@ -22,9 +23,8 @@ class AuthenticationController(private val service: AuthenticationService) {
     @Throws(MessagingException::class)
     fun register(
         @RequestBody @Valid request: RegistrationRequest
-    ): ResponseEntity<Any> {
-        service.register(request)
-        return ResponseEntity.accepted().build()
+    ): ResponseEntity<RegisterResponse> {
+        return ResponseEntity.ok(service.register(request))
 
     }
 

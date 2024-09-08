@@ -59,7 +59,7 @@ class EmailService(
         val template: String = templateEngine.process(templateName, context)
         helper.setText(template, true)
 
-        mailSender.send(mimeMessage)
+//        mailSender.send(mimeMessage)
 
     }
 
