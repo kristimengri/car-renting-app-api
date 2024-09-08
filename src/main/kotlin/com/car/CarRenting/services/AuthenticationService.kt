@@ -132,7 +132,7 @@ class AuthenticationService(
             userRepository.save(user)
 
             logger.debug("User registration completed for ID: {}", user.id)
-            sendValidationEmail(user)
+//            sendValidationEmail(user)
             return RegisterResponse().apply {
                 registerStatus = RegisterStatusEnum.SUCCESSFULLY_REGISTERED
             }
