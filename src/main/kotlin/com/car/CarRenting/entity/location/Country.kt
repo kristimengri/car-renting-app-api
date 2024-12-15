@@ -15,7 +15,7 @@ class Country {
 
     var name : String? = null
 
-    @OneToMany(mappedBy = "country")
-    var states : List<State> = ArrayList()
+//    @OneToMany(mappedBy = "country")
+//    var states : List<State> = ArrayList()
 
 }

@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver
+import org.thymeleaf.templatemode.TemplateMode
 
 @Configuration
 @RequiredArgsConstructor
@@ -42,5 +44,14 @@ class BeansConfig(
     @Bean
     fun authenticationManager(config: AuthenticationConfiguration): AuthenticationManager {
         return config.authenticationManager
+    }
+
+    @Bean
+    fun templateResolver(): SpringResourceTemplateResolver {
+        val templateResolver = SpringResourceTemplateResolver()
+        templateResolver.prefix = "classpath:/templates/"
+        templateResolver.suffix = ".html"
+        templateResolver.templateMode = TemplateMode.HTML
+        return templateResolver
     }
 }
