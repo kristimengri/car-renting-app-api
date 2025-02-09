@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://dpg-ctfi9h56l47c73b924i0-a.oregon-postgres.render.com:5432/carrentingdb
-    username: carrentingdb_user
-    password: W0DcYby8c95CSksY8VZsdLz7zqog69K1
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -18,8 +18,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: intelligencea61@gmail.com
-    password: lvte cvaw lfdp mfhz
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
     properties:
       mail:
         smtp:
@@ -33,7 +33,7 @@ spring:
 application:
   security:
     jwt:
-      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      secret-key: ${SECRET_KEY}
       expiration: 8640000
   mailing:
     frontend:

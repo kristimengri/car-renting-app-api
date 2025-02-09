@@ -14,7 +14,7 @@ import java.util.*
 @Service
 class JwtService() {
 
-    @Value("\${application.security.jwt.secret-key}")
+    @Value("\${SECRET_KEY}")
     private lateinit var secretKey: String
 
     @Value("\${application.security.jwt.expiration}")
