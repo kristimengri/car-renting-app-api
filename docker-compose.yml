@@ -5,8 +5,7 @@ services:
     environment:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
-      PGDATA: /var/lib/postgresql/data
-      POSTGRES_DB: carrenting_f5sy
+      POSTGRES_DB: carrenting
     volumes:
       - postgres:/data/postgres
     ports:
@@ -14,12 +13,24 @@ services:
     networks:
       - spring-demo
     restart: unless-stopped
+
   mail-dev:
     container_name: mail-dev-bsn
     image: maildev/maildev
     ports:
       - 1080:1080
       - 1025:1025
+
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+    networks:
+      - spring-demo
 
 networks:
   spring-demo:
