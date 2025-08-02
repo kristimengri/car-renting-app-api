@@ -17,31 +17,31 @@ class RegistrationRequest {
     var country: String? = null
     var phoneNumber: String? = null
 
-    @NotEmpty(message = "Emrin o kr")
-    @NotBlank(message = "Emrin o kr")
-//  @NotEmptyString(message = "Emrin o kr")
+    @NotEmpty(message = "Firstname Required")
+    @NotBlank(message = "Firstname Required")
+//  @NotEmptyString(message = "Firstname Required")
     var firstname: String? = null
 
-    @NotEmpty(message = "Mbiemrin o kr")
-    @NotBlank(message = "Mbiemrin o kr")
-//  @NotEmptyString(message = "Mbiemrin  o kr")
+    @NotEmpty(message = "Lastname Required")
+    @NotBlank(message = "Lastname Required")
+//  @NotEmptyString(message = "Lastname Required")
     var lastname: String?? = null
 
-    @Email(message = "Nuk e ke email to sakt o kr")
-//  @EmailVerification(message = "Nuk e ke email to sakt o kr")
-    @NotEmpty(message = "Pa email do regjistrohesh o kr")
-    @NotBlank(message = "Pa email do regjistrohesh o kr")
-//  @NotEmptyString(message = "Pa email do regjistrohesh o kr")
+    @Email(message = "Email is not correct")
+//  @EmailVerification(message = "Email is not correct")
+    @NotEmpty(message = "Email Required")
+    @NotBlank(message = "Email Required")
+//  @NotEmptyString(message = "Empty Email Field")
     var email: String? = null
 
-    @NotEmpty(message = "Passwordin se na cave kr")
-    @NotBlank(message = "Passwordin se na cave kr")
-    @Size(min = 4, message = "Passwordi t pakten 4 germa se i qr")
-//  @NotEmptyString(message = "Pa pasurod do regjistrohesh o kr")
+    @NotEmpty(message = "Password Required")
+    @NotBlank(message = "Password Required")
+    @Size(min = 4, message = "Password must have at least 4 characters")
+//  @NotEmptyString(message = "Password must have at least 4 characters")
         var password: String? = null
 
-    //    @NotEmpty(message = "Ca do me u bo o kr")
-//    @NotBlank(message = "Ca do me u bo o kr")
+    //    @NotEmpty(message = "")
+//    @NotBlank(message = "")
     val role: RoleEnum? = null
 
 

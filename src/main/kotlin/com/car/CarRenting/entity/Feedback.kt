@@ -1,5 +1,6 @@
 package com.car.CarRenting.entity
 
+import com.car.CarRenting.entity.account.User
 import com.car.CarRenting.entity.car.Car
 import com.car.CarRenting.entity.common.BaseEntity
 import com.fasterxml.jackson.annotation.JsonBackReference
@@ -18,4 +19,9 @@ class Feedback : BaseEntity() {
     @JoinColumn(name = "car_id")
     @JsonBackReference
     var car: Car? = null
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonBackReference
+    var user: User? = null
 }

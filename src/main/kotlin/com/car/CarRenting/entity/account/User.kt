@@ -1,6 +1,8 @@
 package com.car.CarRenting.entity.account
 
-import com.car.CarRenting.entity.access.Role
+import com.car.CarRenting.entity.Feedback
+import com.car.CarRenting.entity.access.Booking
+import com.car.CarRenting.entity.access.Token
 import com.car.CarRenting.entity.car.Car
 import com.car.CarRenting.entity.common.UserBaseEntity
 import com.fasterxml.jackson.annotation.JsonManagedReference
@@ -15,42 +17,32 @@ import java.security.Principal
 @Table(name = "_users")
 class User : UserDetails, Principal, UserBaseEntity() {
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-        name = "_users_roles",
-        joinColumns = [JoinColumn(name = "user_id")],
-        inverseJoinColumns = [JoinColumn(name = "role_id")]
-    )
-    var roles: MutableList<Role> = mutableListOf()
-
 
     @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
     @JsonManagedReference
     var cars: MutableList<Car> = mutableListOf()
 
-    @OneToOne(mappedBy = "user", cascade = [CascadeType.ALL], fetch = FetchType.LAZY, optional = true)
+    @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
     @JsonManagedReference
-    var customer: Customer? = null
+    var bookings: MutableList<Booking> = mutableListOf()
 
-    @OneToOne(mappedBy = "user", cascade = [CascadeType.ALL], fetch = FetchType.LAZY, optional = true)
+    @OneToMany(mappedBy = "user")
     @JsonManagedReference
-    var carOwner: CarOwner? = null
+    var tokens: MutableList<Token> = mutableListOf()
 
-    @OneToOne(mappedBy = "user", cascade = [CascadeType.ALL], fetch = FetchType.LAZY, optional = true)
+    @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
     @JsonManagedReference
-    var admin: Admin? = null
+    var feedbacks: MutableList<Feedback> = mutableListOf()
 
-
-
-    override fun getAuthorities(): Collection<GrantedAuthority> {
-        return roles.map { SimpleGrantedAuthority(it.name?.name) }
-    }
 
     @Transient
     override fun getPassword(): String {
          return password ?: ""
     }
 
+    override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
+        return TODO("Provide the return value")
+    }
 
     override fun getUsername(): String {
         return email!!

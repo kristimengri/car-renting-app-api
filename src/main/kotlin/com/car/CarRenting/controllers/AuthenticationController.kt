@@ -25,7 +25,6 @@ class AuthenticationController(private val service: AuthenticationService) {
         @RequestBody @Valid request: RegistrationRequest
     ): ResponseEntity<RegisterResponse> {
         return ResponseEntity.ok(service.register(request))
-
     }
 
 

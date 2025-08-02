@@ -1,7 +1,6 @@
 package com.car.CarRenting.entity.car
 
 import com.car.CarRenting.entity.Feedback
-import com.car.CarRenting.entity.account.CarOwner
 import com.car.CarRenting.entity.account.User
 import com.car.CarRenting.entity.common.BaseEntity
 import com.car.CarRenting.enums.DoorsEnum
@@ -33,7 +32,7 @@ class Car : BaseEntity() {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "doorType")
-    var doorType: DoorsEnum = DoorsEnum.FOUR_DOORS_MORE_WHORES
+    var doorType: DoorsEnum = DoorsEnum.FOUR_DOORS
 
     @Column(name = "color")
     var color: String? = null
@@ -44,21 +43,20 @@ class Car : BaseEntity() {
     @Column(name = "isAvailable")
     var isAvailable: Boolean = false
 
-//    @Lob
-//    @Column(name = "imageData", columnDefinition = "bytea")
-//    var imageData: ByteArray? = null
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "car_owner_id")
-    @JsonBackReference
-    var owner: CarOwner? = null
+    @Lob
+    @Column(name = "imageData", columnDefinition = "bytea")
+    var imageData: ByteArray? = null
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @JsonBackReference
     var user: User? = null
 
-    @OneToMany(mappedBy = "car")
+    @OneToMany(mappedBy = "car", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
     @JsonManagedReference
-    var feedbacks: List<Feedback>? = null
+    var feedbacks: MutableList<Feedback>? = mutableListOf()
+
+    @OneToMany(mappedBy = "car", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
+    @JsonManagedReference
+    var carTransactionHistories: MutableList<CarTransactionHistory> = mutableListOf()
 }

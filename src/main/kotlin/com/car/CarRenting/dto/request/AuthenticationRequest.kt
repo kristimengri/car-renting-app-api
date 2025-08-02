@@ -7,14 +7,14 @@ import jakarta.validation.constraints.Size
 
 class AuthenticationRequest {
 
-    @Email(message = "Nuk e ke email to sakt o kr")
-    @NotEmpty(message = "Pa email do regjistrohesh o kr")
-    @NotBlank(message = "Pa email do regjistrohesh o kr")
+    @Email(message = "Email is not correct")
+    @NotEmpty(message = "Email Required")
+    @NotBlank(message = "Email Required")
     var email: String? = null
 
-    @NotEmpty(message = "Passwordin se na cave kr")
-    @NotBlank(message = "Passwordin se na cave kr")
-    @Size(min = 4, message = "Passwordi t pakten 4 germa se i qr")
+    @NotEmpty(message = "Password Required")
+    @NotBlank(message = "Password Required")
+    @Size(min = 4, message = "Password must have at least 4 characters")
     var password: String? = null
 
 }
